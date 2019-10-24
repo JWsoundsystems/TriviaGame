@@ -23,7 +23,7 @@
             <!-- <form method="post" id="quiz"> -->
             <div id="display">30</div>
             <br>
-            <h2>CSS Stands for</h2>
+            <h2>Super Heros</h2>
 
             <div name="quiz" id="quiz">
                 <!-- 
@@ -53,11 +53,9 @@
 
                 </form>
             </div>
-
-            <div name="results">
-
-
-            </div>
+            <br>
+            <div name="results" id="result"></div>
+            <img id="image" src="assets/images/Hulk.jpg" style="display:none;"/>
 
         </div>
 
@@ -124,7 +122,7 @@
 
             if (number === 0) {
                 stop();
-                alert("Time Up!")
+                $("#result").html("Times Up!");
 
             }
         }
@@ -157,9 +155,17 @@
                     );
 
                 }
+
             );
 
         }
+
+        
+
+
+
+
+
         // display quiz right away
         let choice;
         buildQuiz();
@@ -173,12 +179,23 @@
         $("#button").click(function () {
             let correct = myQuestions[questionNumber].correctAnswer
             console.log(choice === correct)
-            console.log("clicky")
+
+            function decider() {
+                if (choice === true)
+                    console.log("You are Correct!");
+                    let choiceNumber = parseInt($(choice).val()); 
+                    $("#result").html("You are Correct!");
+                    document.getElementById('image').style.display='block';
+                    
+
+            }
+
+            decider();
+            stop();
+         
+
+
         })
-
-
-
-        // on submit, show results
     </script>
 
 </body>
