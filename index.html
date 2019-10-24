@@ -55,7 +55,7 @@
             </div>
             <br>
             <div name="results" id="result"></div>
-            <img id="image" src="assets/images/Hulk.jpg" style="display:none;"/>
+            <div id="image"></div>
 
         </div>
 
@@ -70,10 +70,12 @@
         var submitButton = document.getElementById('submit');
 
         const output = [];
-        let questionNumber = 0
+        let questionNumber = -1
 
-        var number = 30;
+        var number = 5;
         var intervalId;
+        let score = 0
+
 
 
         $("#quiz").click()
@@ -88,6 +90,7 @@
                     c: "Hulk"
                 },
                 correctAnswer: "c",
+                images: "Hulk.jpg",
             },
             {
                 question: "What is Spidermans real name",
@@ -96,7 +99,8 @@
                     b: "Dave Dennison",
                     c: "Peter Parker"
                 },
-                correctAnswer: "c"
+                correctAnswer: "c",
+                images: "Spider.jpg",
             },
             {
                 question: "Where is Prince from?",
@@ -117,13 +121,13 @@
         }
 
         function decrement() {
-            number--;
             $("#display").html("<div>" + number + "</div>");
+            number--;
 
-            if (number === 0) {
+            if (number === -1) {
                 stop();
-                $("#result").html("Times Up!");
-
+                $("#result").html("Times Up, You Lose!");
+                decider(true);
             }
         }
 
@@ -131,7 +135,7 @@
             clearInterval(intervalId);
         }
 
-        run();
+
 
         function buildQuiz() {
 
@@ -160,7 +164,7 @@
 
         }
 
-        
+
 
 
 
@@ -168,34 +172,51 @@
 
         // display quiz right away
         let choice;
+        let image;
         buildQuiz();
-        $("#quiz").html(output[questionNumber]);
-        console.log(output);
 
-        $(".gfy").click(function () {
-            choice = $(this).val();
-        })
-
-        $("#button").click(function () {
-            let correct = myQuestions[questionNumber].correctAnswer
-            console.log(choice === correct)
-
-            function decider() {
-                if (choice === true)
-                    console.log("You are Correct!");
-                    let choiceNumber = parseInt($(choice).val()); 
-                    $("#result").html("You are Correct!");
-                    document.getElementById('image').style.display='block';
-                    
-
+        function happy() {
+            questionNumber++;
+            $("#result").empty();
+            $("#image").empty();
+            if (typeof myQuestions[questionNumber] === "undefined") {
+                let html = `<div>Congratz bro, you charged ${score} of 3 crystals!</div>`
+                $("#result").html(html);
+            } else {
+                image = `<img id="image" src="assets/images/${myQuestions[questionNumber].images}"/>`
+                run();
+                $("#quiz").html(output[questionNumber]);
+                $(".gfy").click(function () {
+                    choice = $(this).val();
+                })
+                $("#button").click(function () {
+                    // console.log(choice === correct)
+                    decider();
+                    stop();
+                })
             }
+        }
+        
+        happy();
+        
+        function decider(isTimeUp = false) {
+            let correct = myQuestions[questionNumber].correctAnswer
+            console.log(choice);
+            if (choice === correct) {
+                $("#result").html("You are Correct!");
+                $("#image").html(image);
+                score++;
+            } else {
+                $("#result").html("You are Incorrect!");
+            }
+            if (isTimeUp) {
+                $("#result").html("Times Up Mofo")
+            }
+           
+            setTimeout(happy, 3000);
+            number = 30;
+        }
 
-            decider();
-            stop();
-         
-
-
-        })
     </script>
 
 </body>
