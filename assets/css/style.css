@@ -5,6 +5,19 @@
   
 }
 
+#startButton {
+    position: relative;
+    text-align: center;
+    left: 533px;
+    top: 50px;
+}
+
+#startTitle {
+    position: relative;
+    text-align: center;
+    left: 3px;
+    top: 30px;
+}
 
 h1 {
 position: relative;
