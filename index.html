@@ -17,39 +17,17 @@
     <div class="container">
         <div>
             <header>
-                <h1>Trivia Game!</h1>
+                <br>
+                <br>
+                <h1 id="top">Trivia Game!</h1>
             </header>
             <br>
-            <!-- <form method="post" id="quiz"> -->
+
             <div id="display">30</div>
             <br>
-            <h2>Super Heros</h2>
+            <h2 id="title">Super Hero Quiz</h2>
 
             <div name="quiz" id="quiz">
-                <!-- 
-                <div>
-                    <input type="radio" name="question-1-answers" id="question-1-answers-A" value="A" />
-                    <label for="question-1-answers-A">A) Computer Styled Sections </label>
-                </div>
-
-                <div>
-                    <input type="radio" name="question-1-answers" id="question-1-answers-B" value="B" />
-                    <label for="question-1-answers-B">B) Cascading Style Sheets</label>
-                </div>
-
-                <div>
-                    <input type="radio" name="question-1-answers" id="question-1-answers-C" value="C" />
-                    <label for="question-1-answers-C">C) Crazy Solid Shapes</label>
-                </div>
-
-                <div>
-                    <input type="radio" name="question-1-answers" id="question-1-answers-D" value="D" />
-                    <label for="question-1-answers-D">D) None of the above</label>
-                </div>
-
-                </li> -->
-
-
 
                 </form>
             </div>
@@ -65,6 +43,8 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script type="text/javascript">
+
+    
         var quizSurvey = document.getElementById('quiz');
         var resultOutput = document.getElementById('results');
         var submitButton = document.getElementById('submit');
@@ -72,7 +52,7 @@
         const output = [];
         let questionNumber = -1
 
-        var number = 5;
+        var number = 30;
         var intervalId;
         let score = 0
 
@@ -110,14 +90,15 @@
                     c: "New York",
                     d: "Minnesota"
                 },
-                correctAnswer: "d"
+                correctAnswer: "d",
+                images: "Prince.jpg",
             }
 
         ];
 
         function run() {
             clearInterval(intervalId);
-            intervalId = setInterval(decrement, 1000);
+            intervalId = setInterval(decrement, 3000);
         }
 
         function decrement() {
@@ -164,12 +145,6 @@
 
         }
 
-
-
-
-
-
-
         // display quiz right away
         let choice;
         let image;
@@ -179,9 +154,16 @@
             questionNumber++;
             $("#result").empty();
             $("#image").empty();
+
             if (typeof myQuestions[questionNumber] === "undefined") {
-                let html = `<div>Congratz bro, you charged ${score} of 3 crystals!</div>`
+                let html = `<div>You scored ${score} out of 3 trivia questions correctly!</div>`
+                image = `<img id="image" src="assets/images/trophy.jpg"/>`
                 $("#result").html(html);
+                $("#image").html(image);
+                $("#quiz").hide(html);
+                $("#title").hide(html);
+                $("#top").hide(html);
+                $("#display").hide(html);
             } else {
                 image = `<img id="image" src="assets/images/${myQuestions[questionNumber].images}"/>`
                 run();
@@ -196,9 +178,9 @@
                 })
             }
         }
-        
+
         happy();
-        
+
         function decider(isTimeUp = false) {
             let correct = myQuestions[questionNumber].correctAnswer
             console.log(choice);
@@ -212,11 +194,10 @@
             if (isTimeUp) {
                 $("#result").html("Times Up Mofo")
             }
-           
-            setTimeout(happy, 3000);
+
+            setTimeout(happy, 2000);
             number = 30;
         }
-
     </script>
 
 </body>
